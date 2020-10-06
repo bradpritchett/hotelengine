@@ -19,7 +19,7 @@ const Detail = (props) => {
 		maxWidth: 70
 	  }
 	
-function desc() {
+function descriptionCheck() {
 	let desc;
 	if (detail.description === null) {
 		return desc = "No description given"
@@ -54,7 +54,7 @@ function desc() {
 				</Row>
 				<Row>
 					<Col>
-						<p>Desription: {desc()}</p>
+						<p>Desription: {descriptionCheck()}</p>
 					</Col>
 				</Row>
 				<Row>

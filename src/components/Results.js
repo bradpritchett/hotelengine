@@ -1,15 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom"
 import {Table } from 'reactstrap';
 
 const Results = (props) => {
-	
+	function processActive(props) {
+		let buttons = document.getElementsByClassName('buttons');
+		for(var i = 0; i < buttons.length; i++)
+		{
+			buttons[i].classList.remove('active');
+		}
+		let active = props.active;
+		let classes = document.getElementById(active)
+		if (classes !== null) {
+			classes.classList.add('active')
+		}
+	}
+
 	function handleSortChange(event) {
-		const buttons = document.getElementsByClassName('buttons');
-		console.log(event, buttons)
         props.onChange(event)
     }
-
+	useEffect(() => {
+		processActive(props);
+	}, [])
 	if (props.data === null) {
 		return (
 			<></>
@@ -20,12 +32,12 @@ const Results = (props) => {
 				<thead>
 					<tr>
 						<th>
-							<button type="button" onClick={() => handleSortChange('name')} className="buttons">
+							<button type="button" id="name" onClick={() => handleSortChange('name')} className="buttons active">
 								Name
 							</button>
 						</th>
 						<th>
-						<button type="button" onClick={() => handleSortChange('stars')} className="button">
+						<button type="button" id="stars" onClick={() => handleSortChange('stars')} className="buttons">
 							Stars
 						</button>
 						</th>

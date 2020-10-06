@@ -16,7 +16,7 @@ const Search = () => {
 		e.preventDefault();
 		setSearching(true);
 		search('name');
-	}
+	};
 
 	function search(val) {
 		API.search(searchTerm, val)
@@ -25,33 +25,35 @@ const Search = () => {
 			setResults(res.items);
 			setInitialResults(res.items);
 		})
-	}
+	};
 
 	useEffect(() => {
 		getLanguages();
-	}, [results])
-		
+	}, [results]);
+
+	useEffect(() => {
+		processFilter();
+	}, [resultFilter]);
+
 	const getLanguages = () => {
 		const languageField = document.getElementById('language');
 		let languageArray = []
 		if (results !== null) {
 			for (let i = 0; i < results.length; i++) {
 				let language = results[i].language;
-				if (language === null) {
-					language = "null"
-				}
-				if (languageArray.indexOf(language) === -1) {
+				if (language !== null && languageArray.indexOf(language) === -1) {
 					languageArray.push(language)
 				}
 			}
 			languageField.classList.remove('hidden');
 		}
 		setLanguages(languageArray);
-	}
+	};
 
 	function filterResults(e) {
 		setResultFilter(e.target.value);
-	}
+	};
+
 	function processFilter() {
 		let selected = document.getElementById('language-filter').value;
 		if (selected === "Select Language") {
@@ -60,11 +62,8 @@ const Search = () => {
 			const filteredData = results.filter(i => i.language === selected)
 			setResults(filteredData)
 		}
-	}
-	useEffect(() => {
-		processFilter();
-	}, [resultFilter]);
-
+	};
+	
 	function handleSortChange(val) {
 		setResultFilter("Select Language");
 		setActive(val);
@@ -90,9 +89,9 @@ const Search = () => {
 					<Col md={10}>
 						<Input type="select" name="language-filter" id="language-filter" value={resultFilter} onChange={(e) => filterResults(e)}>
 							<option>Select Language</option>
-						{languages.map(v => {
-							return <option key={v} value={v}>{v}</option>;
-						})}
+							{languages.map(v => {
+								return <option key={v} value={v}>{v}</option>;
+							})}
 						</Input>
 					</Col>
 				</FormGroup> 
