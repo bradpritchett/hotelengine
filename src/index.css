@@ -11,3 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container h1 {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 7px;
+    border-radius: 7px;
+    margin: 7px 0;
+}
+table.table {
+    margin-top: 15px;
+}
+.detail h4 {
+	margin: 14px 0;
+	text-align: center;
+    border-bottom: 1px solid;
+}
+.detail img {
+	margin: 0 7px;
+}
+.spinner-border.text-primary {
+	margin-top: 10px;
+	font-size:30px;
+}
+#language.hidden {
+	display: none;
+}
