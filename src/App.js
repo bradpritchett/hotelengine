@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
-import { Container, Row, Col } from 'reactstrap';
+import { Container } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {

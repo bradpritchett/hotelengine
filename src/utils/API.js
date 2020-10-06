@@ -1,6 +1,7 @@
 export default {
-	search: function(searchTerm) {
-		return fetch(`https://api.github.com/search/repositories?q=${searchTerm}&sort=stars&order=desc`, {
+	search: function(searchTerm, sort) {
+		let url = `https://api.github.com/search/repositories?q=${searchTerm}&sort=${sort}&order=desc`;
+		return fetch(url, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/vnd.github.v3+json'

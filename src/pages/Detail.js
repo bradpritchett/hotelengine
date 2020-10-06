@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Container, Row, Col, Button, Media } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 const Detail = (props) => {
 	const [detail, setDetail] = useState({
 		name: "",
@@ -34,36 +34,40 @@ function desc() {
 			<Container className="detail">
 				<Row>
 					<Col>	
-						<a href="#" onClick={() => props.history.goBack()}>
+						<Button color="link" onClick={() => props.history.goBack()}>
 							New Search
-						</a>
+						</Button>
 					</Col>
 				</Row>
 				<Row>
 					<Col>
-						<h4>Project: <a href={detail.html_url} target="_blank">{detail.name}</a></h4>
+						<h4>Project: <a href={detail.html_url}  target="_blank" rel="noopener noreferrer">{detail.name}</a></h4>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<p>
+							Created By: <a href={detail.owner.html_url} target="_blank" rel="noopener noreferrer">{detail.owner.login}</a>
+							<img src={detail.owner.avatar_url} style={imgStyle} alt={detail.owner.name} />
+						</p>
 					</Col>
 				</Row>
 				<Row>
 					<Col>
 						<p>Desription: {desc()}</p>
 					</Col>
+				</Row>
+				<Row>
 					<Col>
 						<p>
 							Stars: {detail.stargazers_count}
-						</p>
-					</Col>
-					<Col>
-						<p>
-							Language: {detail.language}
 						</p>
 					</Col>
 				</Row>
 				<Row>
 					<Col>
 						<p>
-							Created By: <a href={detail.owner.html_url} target="_blank">{detail.owner.login}</a>
-							<img src={detail.owner.avatar_url} style={imgStyle} alt={detail.owner.name} />
+							Language: {detail.language}
 						</p>
 					</Col>
 				</Row>

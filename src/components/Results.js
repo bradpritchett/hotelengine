@@ -3,6 +3,13 @@ import {Link} from "react-router-dom"
 import {Table } from 'reactstrap';
 
 const Results = (props) => {
+	
+	function handleSortChange(event) {
+		const buttons = document.getElementsByClassName('buttons');
+		console.log(event, buttons)
+        props.onChange(event)
+    }
+
 	if (props.data === null) {
 		return (
 			<></>
@@ -12,9 +19,16 @@ const Results = (props) => {
 			<Table>
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Stars</th>
-						<th>Owner</th>
+						<th>
+							<button type="button" onClick={() => handleSortChange('name')} className="buttons">
+								Name
+							</button>
+						</th>
+						<th>
+						<button type="button" onClick={() => handleSortChange('stars')} className="button">
+							Stars
+						</button>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -24,14 +38,14 @@ const Results = (props) => {
 								<Link
 									to={{
 										pathname: "/detail",
-										data: result // your data array of objects
+										data: result 
 									}}
 								 >
 									 {result.name}
 								 </Link>
 							 </td>
+							 
 							<td>{result.stargazers_count}</td>
-							<td>{result.owner.login}</td>
 						</tr>
 					})} 
 				</tbody>

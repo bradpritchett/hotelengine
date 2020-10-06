@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { Row, Col } from 'reactstrap';
 import Search from "../components/Search";
 

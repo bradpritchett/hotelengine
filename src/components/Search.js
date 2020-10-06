@@ -7,52 +7,75 @@ const Search = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [searching, setSearching] =useState(false);
 	const [results, setResults] = useState(null);
+	const [resultFilter, setResultFilter] = useState();
+	const [active, setActive] = useState("name");
+	const [initialResults, setInitialResults] = useState(null);
 	const [languages, setLanguages] = useState(["Select Language"]);
 
-	const search = (e) => {
+	const processSearch = (e) => {
 		e.preventDefault();
-			setSearching(true)
-			API.search(searchTerm)
-				.then(res => {
-					setSearching(false)
-					setResults(res.items)
-				})
-		}
+		setSearching(true);
+		search('name');
+	}
 
-		useEffect(() => {
-			getLanguages();
-		}, [results])
+	function search(val) {
+		API.search(searchTerm, val)
+		.then(res => {
+			setSearching(false);
+			setResults(res.items);
+			setInitialResults(res.items);
+		})
+	}
 
-		const getLanguages = () => {
-			const languageField = document.getElementById('language');
-			let languageArray = []
-			if (results !== null) {
-				for (let i = 0; i < results.length; i++) {
-					let language = results[i].language;
-					if (languageArray.indexOf(language) === -1) {
-						languageArray.push(language)
-					}
+	useEffect(() => {
+		getLanguages();
+	}, [results])
+		
+	const getLanguages = () => {
+		const languageField = document.getElementById('language');
+		let languageArray = []
+		if (results !== null) {
+			for (let i = 0; i < results.length; i++) {
+				let language = results[i].language;
+				if (language === null) {
+					language = "null"
 				}
-				languageField.classList.remove('hidden');
+				if (languageArray.indexOf(language) === -1) {
+					languageArray.push(language)
+				}
 			}
-			
-			setLanguages(languageArray);
+			languageField.classList.remove('hidden');
 		}
+		setLanguages(languageArray);
+	}
 
-		function filterResults() {
-			let selected = document.getElementById('language-filter').value;
+	function filterResults(e) {
+		setResultFilter(e.target.value);
+	}
+	function processFilter() {
+		let selected = document.getElementById('language-filter').value;
+		if (selected === "Select Language") {
+			setResults(initialResults);
+		} else {
 			const filteredData = results.filter(i => i.language === selected)
 			setResults(filteredData)
 		}
+	}
+	useEffect(() => {
+		processFilter();
+	}, [resultFilter]);
 
-	
-
-
+	function handleSortChange(val) {
+		setResultFilter("Select Language");
+		setActive(val);
+		setSearching(true);
+		search(val);
+	};
 
 	return (
 		<>
-			<Form onSubmit={search}>
-				<FormGroup row>
+			<Form onSubmit={processSearch}>
+				<FormGroup row> 
 					<Label for="search-term" md={2}>Search Terms:</Label>
 					<Col md={10}>
 						<Input 
@@ -65,7 +88,7 @@ const Search = () => {
 				<FormGroup row className="hidden" id="language">
 					<Label for="language-filter" md={2}>Language</Label>
 					<Col md={10}>
-						<Input type="select" name="language-filter" id="language-filter" onChange={() => filterResults()}>
+						<Input type="select" name="language-filter" id="language-filter" value={resultFilter} onChange={(e) => filterResults(e)}>
 							<option>Select Language</option>
 						{languages.map(v => {
 							return <option key={v} value={v}>{v}</option>;
@@ -82,7 +105,7 @@ const Search = () => {
 			{searching ? (
 				<Spinner color="primary" />
 			) : (
-				<Results data={results} />
+				<Results data={results} active={active} onChange={handleSortChange} />
 			)}
 			
 		</>
