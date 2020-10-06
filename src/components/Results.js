@@ -3,6 +3,8 @@ import {Link} from "react-router-dom"
 import {Table } from 'reactstrap';
 
 const Results = (props) => {
+
+	// Determines which filter was use and which is given the css class of active
 	function processActive(props) {
 		let buttons = document.getElementsByClassName('buttons');
 		for(var i = 0; i < buttons.length; i++)
@@ -16,12 +18,16 @@ const Results = (props) => {
 		}
 	}
 
+	// Callback to parent on sort
 	function handleSortChange(event) {
         props.onChange(event)
-    }
+	}
+	
+	// Fires active test on mount
 	useEffect(() => {
 		processActive(props);
 	}, [])
+
 	if (props.data === null) {
 		return (
 			<></>

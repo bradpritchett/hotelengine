@@ -8,26 +8,30 @@ const Detail = (props) => {
 			avatar_url: ""
 		} 
 	});
+
+	// Sets data from props on mount
 	useEffect(() => {
 		if (props.location.data) {
 			setDetail(props.location.data)
 		}
 	}, [])
 	
+	// Styles the image quickly
 	const imgStyle = {
 		maxHeight: 70,
 		maxWidth: 70
 	  }
 	
-function descriptionCheck() {
-	let desc;
-	if (detail.description === null) {
-		return desc = "No description given"
+	// If no description was entered I populate it so as to provide more detail
+	function descriptionCheck() {
+		let desc;
+		if (detail.description === null) {
+			return desc = "No description given"
+		}
+		else {
+			return desc = detail.description
+		}
 	}
-	else {
-		return desc = detail.description
-	}
-}
 
 	if (props.location.data) {
 		return (

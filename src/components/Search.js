@@ -12,12 +12,14 @@ const Search = () => {
 	const [initialResults, setInitialResults] = useState(null);
 	const [languages, setLanguages] = useState(["Select Language"]);
 
+	// Activated by form submission. Sets searching to true which starts the spinner and processes the search
 	const processSearch = (e) => {
 		e.preventDefault();
 		setSearching(true);
 		search('name');
 	};
 
+	// Search accepts an argument that will be used to determine the sort in the query
 	function search(val) {
 		API.search(searchTerm, val)
 		.then(res => {
@@ -27,14 +29,17 @@ const Search = () => {
 		})
 	};
 
+	// Once the API call returns data useEffect will fire the function that gathers language information on each file to create dynamic select options
 	useEffect(() => {
 		getLanguages();
 	}, [results]);
 
+	// When sort filters are updated the filters are fired
 	useEffect(() => {
 		processFilter();
 	}, [resultFilter]);
 
+	// Generates select options
 	const getLanguages = () => {
 		const languageField = document.getElementById('language');
 		let languageArray = []
@@ -50,10 +55,12 @@ const Search = () => {
 		setLanguages(languageArray);
 	};
 
+	// Sets filter on filter change, which triggers the useEffect
 	function filterResults(e) {
 		setResultFilter(e.target.value);
 	};
 
+	// Function that processes a filter when filter is set
 	function processFilter() {
 		let selected = document.getElementById('language-filter').value;
 		if (selected === "Select Language") {
@@ -64,6 +71,7 @@ const Search = () => {
 		}
 	};
 	
+	// Receives callback from sort in results
 	function handleSortChange(val) {
 		setResultFilter("Select Language");
 		setActive(val);
