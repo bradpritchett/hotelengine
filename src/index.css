@@ -57,4 +57,5 @@ table.table {
 	}
 	.buttons.active {
 		font-weight: bold;
+		text-decoration: underline;
 	}
